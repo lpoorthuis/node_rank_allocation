@@ -63,6 +63,8 @@ static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
     int nodeSize;
     MPI_Comm_size(nodeComm, &nodeSize);
 
+    printf("%d/%d\n", nodeSize, nodeRank);
+
     // now check for collision with hashed hostnames
     int nSend = MAX(HOST_NAME_MAX, LOCAL_HOSTNAME_MAX);
     char *send = (char *) malloc(sizeof(char)*nSend);
@@ -200,7 +202,7 @@ int main(int argc, char** argv) {
         }
     }    
 
-    printf("%d\n", node_rank);
+    printf("world:%d node:%d\n", world_rank, node_rank);
 
     MPI_Finalize();
 }
