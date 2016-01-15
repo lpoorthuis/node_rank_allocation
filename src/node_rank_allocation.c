@@ -1,30 +1,5 @@
 #include "node_rank_allocation.h"
 
-#include <errno.h>
-
-#include <stddef.h>
-#include <stdint.h>
-
-#include <unistd.h>
-
-#ifndef HOST_NAME_MAX
-    // see the man page of 'gethostname'
-    #define HOST_NAME_MAX 64
-#endif
-
-#define LOCAL_HOSTNAME_MAX 256
-
-#ifndef MAX
-    #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#endif
-
-static int NodeRankByHash(MPI_Comm comm, int mpiRank);
-static uint32_t Adler32(const void *buf, size_t buflength);
-
-typedef int bool;
-#define true 1
-#define false 0
-
 int MpiNodeRank(MPI_Comm comm, int mpiRank) {
     int nodeRank = -1;
 
