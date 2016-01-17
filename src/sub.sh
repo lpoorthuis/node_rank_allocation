@@ -1,6 +1,5 @@
 #!/bin/bash -x
-#SBATCH --nodes=2
-#SBATCH --ntasks=96
+#SBATCH --nodes=8
 #SBATCH --ntasks-per-node=48
 #SBATCH --output=job.out
 #SBATCH --error=job.err
