@@ -3,7 +3,7 @@ OBJ         = ${PROGRAM:=.o}
 
 ARCH        = _LINUX
 CC          = mpicc
-USER_CFLAGS = -D${ARCH} -std=c99
+USER_CFLAGS = -D${ARCH}
 
 $(PROGRAM): $(OBJ)
 	$(CC) $(USER_CFLAGS) -o $(PROGRAM).out $(OBJ)

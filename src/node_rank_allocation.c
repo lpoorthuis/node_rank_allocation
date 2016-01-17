@@ -13,7 +13,7 @@ int MpiNodeRank(MPI_Comm comm, int mpiRank) {
 }
 
 static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
-    int error;
+    int error, i;
 
     char*  hostname       = NULL;
     size_t hostnameLength = 0;
@@ -28,6 +28,9 @@ static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
     int commRank = -1;
     MPI_Comm_rank(comm, &commRank);
 
+    int commSize = -1;
+    MPI_Comm_size(comm, &commSize);
+
     MPI_Comm nodeComm = MPI_COMM_NULL;
 
     MPI_Comm_split(comm, checkSum, mpiRank, &nodeComm);
@@ -37,8 +40,6 @@ static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
 
     int nodeSize;
     MPI_Comm_size(nodeComm, &nodeSize);
-
-    printf("%d/%d\n", nodeSize, nodeRank);
 
     // now check for collision with hashed hostnames
     int nSend = MAX(HOST_NAME_MAX, LOCAL_HOSTNAME_MAX);
@@ -56,7 +57,7 @@ static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
 
     #define STREQ(a, b) (strcmp((a), (b)) == 0)
 
-    for(int i=0; i<nodeSize; i++) {
+    for(i=0; i<nodeSize; i++) {
         if(STREQ(send, neighbor)) {
             if (i < nodeRank) {
                 ++localNodeRank;
@@ -81,6 +82,10 @@ static int NodeRankByHash(MPI_Comm comm, int mpiRank) {
     MPI_Comm_free(&nodeComm);
 
     free(hostname), hostname = NULL;
+
+    if (nodeRank == 0) {
+        printf("Node(size/rank): %d/%d\nWorld(size/rank): %d/%d\n", nodeSize, nodeRank, commSize, commRank);
+    }
 
     return nodeRank;
 }
@@ -135,8 +140,9 @@ static uint32_t Adler32(const void *buf, size_t buflength) {
 
     uint32_t s1 = 1;
     uint32_t s2 = 0;
+    size_t n;
 
-    for (size_t n=0; n<buflength; n++) {
+    for (n=0; n<buflength; n++) {
         s1 = (s1 + buffer[n]) % 65521;
         s2 = (s2 + s1) % 65221;
     }
@@ -175,9 +181,7 @@ int main(int argc, char** argv) {
         {
             break;
         }
-    }    
-
-    printf("world:%d node:%d\n", world_rank, node_rank);
+    }
 
     MPI_Finalize();
 }
