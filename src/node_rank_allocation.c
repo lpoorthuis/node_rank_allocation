@@ -152,36 +152,14 @@ static uint32_t Adler32(const void *buf, size_t buflength) {
 
 int main(int argc, char** argv) {
     int world_rank, world_size;
-    int node_rank, node_size;
-    int type;
+    int node_rank;
 
     MPI_Init(&argc, &argv);
 
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-    type=2;
-
-    switch(type) {
-        case 1:
-        {
-            char name[MPI_MAX_PROCESSOR_NAME];
-            int  resultlen;
-
-            MPI_Get_processor_name(name, &resultlen);
-
-            printf("%s %d\n", name, resultlen);
-            break;
-        }
-        case 2:
-        {
-            node_rank = MpiNodeRank(MPI_COMM_WORLD, world_rank);
-        }
-        default:
-        {
-            break;
-        }
-    }
+    node_rank = MpiNodeRank(MPI_COMM_WORLD, world_rank);
 
     MPI_Finalize();
 }
