@@ -16,10 +16,10 @@ based on the actual hardware structure you are calculating on. This kind of
 information,for example, is useful if you only want to open one I/O stream per
 hardware node to avoid I/O performance bottlenecks.
 
-The method relies on the `MPI_Comm_split <http://www.mpich.org/static/docs/latest/www3/MPI_Comm_split.html>`
+The method relies on the `MPI_Comm_split <http://www.mpich.org/static/docs/latest/www3/MPI_Comm_split.html>`_
 function which splits a communicator into sub-communicators based on a colour.
 For this method we map the hostname via the
-`Adler-32 <http://en.wikipedia.org/wiki/Adler-32>` hash function to an integer
+`Adler-32 <http://en.wikipedia.org/wiki/Adler-32>`_ hash function to an integer
 and use it as our colour. We also supply the function with the ``MPI_rank`` of
 the ``MPI_COMM_WORLD`` as a key which controls the rank assignment in the new
 sub-communicator.
@@ -41,21 +41,21 @@ by the slurm batch script).
         slts08@jrl01:$ sbatch src/sub.sh
         slts08@jrl01:$ cat src/job.out
         Node(size/rank): 48/0
-		World(size/rank): 384/96
-		Node(size/rank): 48/0
-		World(size/rank): 384/288
-		Node(size/rank): 48/0
-		World(size/rank): 384/0
-		Node(size/rank): 48/0
-		World(size/rank): 384/144
-		Node(size/rank): 48/0
-		World(size/rank): 384/336
-		Node(size/rank): 48/0
-		World(size/rank): 384/192
-		Node(size/rank): 48/0
-		World(size/rank): 384/240
-		Node(size/rank): 48/0
-		World(size/rank): 384/48
+	World(size/rank): 384/96
+	Node(size/rank): 48/0
+	World(size/rank): 384/288
+	Node(size/rank): 48/0
+	World(size/rank): 384/0
+	Node(size/rank): 48/0
+	World(size/rank): 384/144
+	Node(size/rank): 48/0
+	World(size/rank): 384/336
+	Node(size/rank): 48/0
+	World(size/rank): 384/192
+	Node(size/rank): 48/0
+	World(size/rank): 384/240
+	Node(size/rank): 48/0
+	World(size/rank): 384/48
 
 ******
 Status
