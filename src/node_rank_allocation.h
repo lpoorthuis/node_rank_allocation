@@ -1,10 +1,7 @@
-#ifndef __NODE_RANK_ALLOCATION_H__
-#define __NODE_RANK_ALLOCATION_H__
-
 #include <mpi.h>
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <errno.h>
 #include <string.h>
@@ -15,13 +12,13 @@
 #include <unistd.h>
 
 #ifndef HOST_NAME_MAX
-    #define HOST_NAME_MAX 64
+#define HOST_NAME_MAX 64
 #endif
 
 #define LOCAL_HOSTNAME_MAX 256
 
 #ifndef MAX
-    #define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 typedef int bool;
@@ -33,5 +30,3 @@ static uint32_t Adler32(const void *buf, size_t buflength);
 
 int MpiNodeRank(MPI_Comm comm, int mpiRank);
 int GetHostName(char **hostnamePtr, size_t *hostnameLength);
-
-#endif

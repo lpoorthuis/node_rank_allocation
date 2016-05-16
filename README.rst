@@ -36,7 +36,7 @@ Usage
 This is exemplary output(run on hardware that resembles the resources required
 by the slurm batch script).
 
-.. code-block:: c
+.. code::
 
         slts08@jrl01:$ sbatch src/sub.sh
         slts08@jrl01:$ cat src/job.out
